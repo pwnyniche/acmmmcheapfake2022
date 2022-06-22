@@ -4,8 +4,8 @@ FROM nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
 ENV DEBIAN_FRONTEND="noninteractive" \
     TZ="Asia/Vietnam"
 
-# ENV COSMOS_BASE_DIR="/opt/COSMOS" \
-#     COSMOS_DATA_DIR="/mmsys21cheapfakes" \
+ENV ANNOTATION_DATA_DIR="/acmmmcheapfakes/" \
+    IMAGE_DATA_DIR="/acmmmcheapfakes/images/" \
 #     COSMOS_IOU="0.25" \
 #     COSMOS_RECT_OPTIM="1"
 
@@ -45,7 +45,7 @@ RUN python3 -m pip install -e detectron2
 RUN pip3 install numpy --upgrade
 
 # OFA
-RUN cd OFA && pip3 install -r requirements.txt
+# RUN cd OFA && pip3 install -r requirements.txt
 
 # Start the code
 ENTRYPOINT []

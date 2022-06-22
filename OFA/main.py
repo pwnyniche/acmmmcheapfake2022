@@ -52,7 +52,7 @@ eos_idx = task.src_dict.eos()
 tgt_dict = task.tgt_dict
 max_src_length = 80
 
-device='cuda'
+# device='cuda'
 
 def encode_text(text, length=None, append_bos=False, append_eos=False):
     line = [
@@ -140,7 +140,7 @@ def construct_sample(uniq_id ,image, hypothesis, caption,label):
         }
     return example
 
-device = 'cuda'
+# device = 'cuda'
 models[0].to(device);
 
 def create_sample(row):

@@ -35,8 +35,8 @@ def parseResults(code, resized=False):
     """Parse/Scrape the HTML code for the info we want."""
     
     soup = BeautifulSoup(code, 'html.parser')
-    with open("result.txt", "w") as o:
-        o.write(code)
+    # with open("result.txt", "w") as o:
+    #     o.write(code)
     results = {
         'links': [],
     }
@@ -91,7 +91,9 @@ def getImage(url):
     try:
         if(url.startswith('https://www.snopes.com')):
             return (False,False)
+        # print(url)
         response = requests.get(url,timeout=10,headers=headers)
+        # print(f'done for {url}')
         return (Image.open(BytesIO(response.content)),url)
     except Exception as e_info:
         # print(url)
@@ -104,8 +106,8 @@ def retrieve(image_path, caption):
     code = doImageSearch(SEARCH_URL + urllib.parse.quote_plus(caption))
 
     result = parseResults(code)
-    with ThreadPool(16) as pool:
-        resource = pool.imap(getImage, result['links'][:20])
+    with ThreadPool(8) as pool:
+        resource = pool.imap(getImage, result['links'][:8])
         resource_list = list(resource)
         image_list = []
         url_list = []
