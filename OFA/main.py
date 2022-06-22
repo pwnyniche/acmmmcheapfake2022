@@ -13,6 +13,7 @@ from tasks.mm_tasks.snli_ve import SnliVeTask
 from PIL import Image
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # torch.cuda.set_device(device)
+IMAGE_DATA_DIR = os.getenv('IMAGE_DATA_DIR')
 
 # specify some options for evaluation
 parser = options.get_generation_parser()
@@ -146,10 +147,10 @@ models[0].to(device);
 def create_sample(row):
     with torch.no_grad():
         d1 = construct_sample(row["img_local_path"]+'__c1',
-            Image.open(os.path.join('/root/thesis/dataset/',row["img_local_path"])), 
+            Image.open(os.path.join(IMAGE_DATA_DIR,row["img_local_path"])),
             row['caption1'], '','entailment')
         d2 = construct_sample(row["img_local_path"]+'__c2',
-            Image.open(os.path.join('/root/thesis/dataset/',row["img_local_path"])), 
+            Image.open(os.path.join(IMAGE_DATA_DIR,row["img_local_path"])), 
             row['caption2'], '','entailment')
         sample = collate([d1,d2], pad_idx, eos_idx)
         result = eval_snli_ve(task,None,models,sample)
