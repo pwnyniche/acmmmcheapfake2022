@@ -1,19 +1,18 @@
 """ Basic configuration and settings for training the model"""
-
+import os
 import torch
 from torch import nn
 import tensorflow_hub as hub
 import torchvision.transforms as transforms
 
 # Data Directories
-# BASE_DIR = '/home/shivangi/Desktop/Data/Projects/cosmos/'
-# DATA_DIR = '/home/shivangi/Desktop/Data/Projects/cosmos/data/'
-# TARGET_DIR = "/home/shivangi/Desktop/Data/Projects/cosmos/viz/"
-BASE_DIR = '/root/thesis/COSMOS/'
-DATA_DIR = '/root/thesis/dataset'
-JSON_DIR = ''
+# BASE_DIR = '/root/thesis/COSMOS/'
+# DATA_DIR = '/root/thesis/dataset'
+BASE_DIR = os.path.join(os.getenv('BASE_DIR'),'COSMOS')
+ANNOTATION_DATA_DIR = os.getenv('ANNOTATION_DATA_DIR')
+IMAGE_DATA_DIR = os.getenv('IMAGE_DATA_DIR')
+
 # DATA_DIR = 'data'
-TARGET_DIR = "/root/thesis/COSMOS/data/viz"
 # Word Embeddings
 embedding_length = 300
 embed_type = 'use'  # glove, fasttext, use

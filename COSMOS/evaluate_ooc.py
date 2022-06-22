@@ -4,7 +4,7 @@ import cv2
 import os
 from tqdm import tqdm
 import torch
-from utils.config import BASE_DIR, DATA_DIR, JSON_DIR, textual_sim_threshold, embed_type,\
+from utils.config import BASE_DIR, ANNOTATION_DATA_DIR, IMAGE_DATA_DIR, textual_sim_threshold, embed_type,\
 device, use_embed, iou_overlap_threshold
 from utils.text_utils import get_text_metadata
 from model_archs.models import CombinedModelMaskRCNN
@@ -42,7 +42,7 @@ def get_scores(v_data):
     combined_model.to(device)
     combined_model.eval()
 
-    img_path = os.path.join(DATA_DIR, v_data["img_local_path"])
+    img_path = os.path.join(IMAGE_DATA_DIR, v_data["img_local_path"])
 
     bbox_list = v_data['maskrcnn_bboxes']
     bbox_classes = [-1] * len(bbox_list)
@@ -121,7 +121,7 @@ def main(args):
     """ Main function to compute out-of-context detection accuracy"""
 
     # test_samples = read_json_data(os.path.join(DATA_DIR, 'cosmos_anns_acm','acm_anns', 'public_test_acm.json'))
-    test_samples = read_json_data(os.path.join(JSON_DIR, 'test_data.json'))
+    test_samples = read_json_data(os.path.join(ANNOTATION_DATA_DIR, 'test_data.json'))
     ours_correct = 0
     lang_correct = 0
 

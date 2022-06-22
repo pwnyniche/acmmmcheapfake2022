@@ -13,9 +13,10 @@ tqdm.pandas()
 classifier = pipeline("text-classification", model = "microsoft/deberta-xlarge-mnli",
 device=torch.device('cuda',0))
 
+BASE_DIR = os.getenv('BASE_DIR')
 ANNOTATION_DATA_DIR = os.getenv('ANNOTATION_DATA_DIR')
-# '/root/thesis/dataset/cosmos_anns_acm/acm_anns'
 IMAGE_DATA_DIR = os.getenv('IMAGE_DATA_DIR')
+# '/root/thesis/dataset/cosmos_anns_acm/acm_anns'
 # '/root/thesis/dataset'
 
 test_data = list(
@@ -30,41 +31,31 @@ def print_div(s):
     print('||' + s)
     print('=' * term_size.columns)
 
-# sys.path.append('/root/thesis/acmmmcheapfakes/COSMOS')
-sys.path.append('/acmmmcheapfakes/COSMOS')
+sys.path.append(os.path.join(BASE_DIR, 'COSMOS'))
 
 from COSMOS import evaluate_ooc
-evaluate_ooc.DATA_DIR = IMAGE_DATA_DIR
-evaluate_ooc.JSON_DIR = ANNOTATION_DATA_DIR
 
 print_div('Running COSMOS')
-# evaluate_ooc.main(None)
+evaluate_ooc.main(None)
 sys.modules.pop('utils')
 sys.modules.pop('utils.eval_utils')
 
 
 print_div('Running OFA')
-os.chdir('/acmmmcheapfakes/OFA')
-# os.chdir('/root/thesis/acmmmcheapfakes/OFA')
-
-# sys.path.remove('/root/thesis/acmmmcheapfakes/COSMOS')
-sys.path.remove('/acmmmcheapfakes/COSMOS')
-
-# sys.path.append('/root/thesis/acmmmcheapfakes/OFA')
-sys.path.append('/acmmmcheapfakes/OFA')
+os.chdir(os.path.join(BASE_DIR, 'OFA'))
+sys.path.remove(os.path.join(BASE_DIR, 'COSMOS'))
+sys.path.append(os.path.join(BASE_DIR, 'OFA'))
 
 from OFA.main import run
 run(df)
 
-# cosmos_iou = pd.read_csv('/root/thesis/acmmmcheapfakes/pred_contexts.txt', header=None)
-cosmos_iou = pd.read_csv('/acmmmcheapfakes/pred_contexts.txt', header=None)
+cosmos_iou = pd.read_csv(os.path.join(BASE_DIR, 'pred_contexts.txt'), header=None)
 cosmos_iou.columns = ['iou']
 df = pd.concat([df, cosmos_iou['iou']], axis=1)
 ofa_result = pd.read_csv('ofa_full.csv')
 df = pd.concat([df, ofa_result[['c1_entail','c2_entail']]], axis=1)
 
-# os.chdir('/root/thesis/acmmmcheapfakes')
-os.chdir('/acmmmcheapfakes')
+os.chdir(BASE_DIR)
 
 print_div('Running NLI')
 df['nli_label'] = df.progress_apply(lambda x: classifier(x.caption1+x.caption2)[0], axis=1)
