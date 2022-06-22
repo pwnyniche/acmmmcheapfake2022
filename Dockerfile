@@ -5,11 +5,11 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     TZ="Asia/Vietnam"
 
 ENV ANNOTATION_DATA_DIR="/acmmmcheapfakes/" \
-    IMAGE_DATA_DIR="/acmmmcheapfakes/images/" \
+    IMAGE_DATA_DIR="/acmmmcheapfakes/images/" 
 #     COSMOS_IOU="0.25" \
 #     COSMOS_RECT_OPTIM="1"
 
-WORKDIR acmmmcheapfakes/
+WORKDIR /acmmmcheapfakes/
 
 # Copy Dependencies
 COPY . ./
@@ -17,7 +17,7 @@ COPY . ./
 # Install Python
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    software-properties-common && \
+    software-properties-common libcurl4-openssl-dev libssl-dev && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     rm -rf /var/lib/apt/lists/*
 
@@ -45,8 +45,8 @@ RUN python3 -m pip install -e detectron2
 RUN pip3 install numpy --upgrade
 
 # OFA
-# RUN cd OFA && pip3 install -r requirements.txt
+RUN cd OFA && pip3 install -r requirements.txt
 
 # Start the code
 ENTRYPOINT []
-CMD [ "python3", "test.py" ]
+# CMD [ "python3", "test.py" ]
