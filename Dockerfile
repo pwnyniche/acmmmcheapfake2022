@@ -5,11 +5,11 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     TZ="Asia/Vietnam"
 
 ENV ANNOTATION_DATA_DIR="/acmmmcheapfakes/" \
-    IMAGE_DATA_DIR="/acmmmcheapfakes/images/" \
+    IMAGE_DATA_DIR="/acmmmcheapfakes/images/" 
 #     COSMOS_IOU="0.25" \
 #     COSMOS_RECT_OPTIM="1"
 
-WORKDIR acmmmcheapfakes/
+WORKDIR /acmmmcheapfakes/
 
 # Copy Dependencies
 COPY . ./
