@@ -11,7 +11,8 @@ import torchvision.transforms as transforms
 BASE_DIR = os.path.join(os.getenv('BASE_DIR'),'COSMOS')
 ANNOTATION_DATA_DIR = os.getenv('ANNOTATION_DATA_DIR')
 IMAGE_DATA_DIR = os.getenv('IMAGE_DATA_DIR')
-
+DATA_DIR = IMAGE_DATA_DIR
+TARGET_DIR = ''
 # DATA_DIR = 'data'
 # Word Embeddings
 embedding_length = 300

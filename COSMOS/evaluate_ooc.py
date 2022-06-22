@@ -37,7 +37,7 @@ def get_scores(v_data):
             score_c1 (float): Score for the first caption associated with the image
             score_c2 (float): Score for the second caption associated with the image
     """
-    checkpoint = torch.load(BASE_DIR + 'models_final/' + model_name + '.pt')
+    checkpoint = torch.load(os.path.join(BASE_DIR,'models_final',model_name + '.pt'))
     combined_model.load_state_dict(checkpoint)
     combined_model.to(device)
     combined_model.eval()
