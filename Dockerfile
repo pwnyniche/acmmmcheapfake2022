@@ -5,9 +5,8 @@ ENV DEBIAN_FRONTEND="noninteractive" \
     TZ="Asia/Vietnam"
 
 ENV ANNOTATION_DATA_DIR="/acmmmcheapfakes/" \
-    IMAGE_DATA_DIR="/acmmmcheapfakes/images/" 
-#     COSMOS_IOU="0.25" \
-#     COSMOS_RECT_OPTIM="1"
+    IMAGE_DATA_DIR="/acmmmcheapfakes/images/" \
+    BASE_DIR="/acmmmcheapfakes/"
 
 WORKDIR /acmmmcheapfakes/
 
@@ -23,19 +22,20 @@ RUN apt-get update && \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    python3.7 python3-dev python3-pip python3-opencv \
+    python3.8 python3-dev python3-pip python3-opencv \
     build-essential git && \
     rm -rf /var/lib/apt/lists/*
 
 # Prepare Python Dependencies
-RUN python3 -m pip install --upgrade pip && \
-    pip3 install cython numpy setuptools
+RUN python3 -m pip install --upgrade pip==21.2.2 && \
+    pip3 install cython numpy setuptools wheel
 
+RUN cd OFA && pip3 install --use-feature=in-tree-build ./fairseq
 
 # COSMOS
 RUN pip3 install -r COSMOS/requirements.txt
 
-# Download spaCy
+# # Download spaCy
 RUN python3 -m spacy download en && \
     python3 -m spacy download en_core_web_sm
 
@@ -49,4 +49,4 @@ RUN cd OFA && pip3 install -r requirements.txt
 
 # Start the code
 ENTRYPOINT []
-# CMD [ "python3", "test.py" ]
+CMD [ "python3", "acmmm.py" ]
