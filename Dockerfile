@@ -41,12 +41,14 @@ RUN python3 -m spacy download en && \
 
 # install Pytorch with CUDA
 RUN pip3 install --no-cache-dir torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchtext==0.4.0 -f https://download.pytorch.org/whl/torch_stable.html
-RUN python3 -m pip install -e detectron2
 RUN pip3 install numpy --upgrade
 
 # OFA
 RUN cd OFA && pip3 install -r requirements.txt
 
+RUN pip3 install -e detectron2
+RUN pip3 install omegaconf==2.0.06
+RUN pip3 install hydra-core==1.0.7
 # Start the code
 ENTRYPOINT []
 CMD [ "python3", "acmmm.py" ]

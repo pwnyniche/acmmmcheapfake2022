@@ -310,7 +310,7 @@ def load_checkpoint_to_cpu(path, arg_overrides=None, load_on_all_ranks=False):
         if load_on_all_ranks:
             torch.distributed.barrier()
         local_path = PathManager.get_local_path(path)
-
+    print('OPS')
     with open(local_path, "rb") as f:
         state = torch.load(f, map_location=torch.device("cpu"))
 
@@ -399,7 +399,7 @@ def load_model_ensemble_and_task(
     assert state is None or len(filenames) == 1
 
     from fairseq import tasks
-
+    print('zzzzzzzzzzzzzzzzzzzzz')
     assert not (
         strict and num_shards > 1
     ), "Cannot load state dict with strict=True and checkpoint shards > 1"

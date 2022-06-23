@@ -4,3 +4,4 @@ OFA/cache/
 __pycache__/
 OFA/__pycache__/
 *.pyc
+*.egg-info/
