@@ -4,8 +4,8 @@ FROM nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
 ENV DEBIAN_FRONTEND="noninteractive" \
     TZ="Asia/Vietnam"
 
-ENV ANNOTATION_DATA_DIR="/acmmmcheapfakes/" \
-    IMAGE_DATA_DIR="/acmmmcheapfakes/images/" \
+ENV ANNOTATION_DATA_DIR="/acmmmcheapfakes/data/" \
+    IMAGE_DATA_DIR="/acmmmcheapfakes/data/images/" \
     BASE_DIR="/acmmmcheapfakes/"
 
 WORKDIR /acmmmcheapfakes/
@@ -16,7 +16,7 @@ COPY . ./
 # Install Python
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    software-properties-common libcurl4-openssl-dev libssl-dev && \
+    software-properties-common libcurl4-openssl-dev libssl-dev wget && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     rm -rf /var/lib/apt/lists/*
 

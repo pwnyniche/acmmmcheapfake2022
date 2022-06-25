@@ -1,7 +1,7 @@
+# TODO: COSMOS, OFA, SBERT, NLI, CLIP device
 import sys
 import torch
 import pandas as pd
-import numpy as np
 from transformers import pipeline
 import json
 import os
@@ -9,8 +9,7 @@ import numpy as np
 from tqdm import tqdm
 from sbert import sbert
 from online_search import retrieve
-from predict import predict_final
-torch.manual_seed(42)
+from predict import predict_baseline, predict_baseline_025, predict_nli, predict_fabricate, predict_online_match, predict_final
 tqdm.pandas()
 classifier = pipeline("text-classification", model = "microsoft/deberta-xlarge-mnli", device=torch.device('cuda',0))
 
@@ -35,7 +34,7 @@ sys.path.append(os.path.join(BASE_DIR, 'COSMOS'))
 from COSMOS import evaluate_ooc
 
 print_div('Running COSMOS')
-evaluate_ooc.main(None)
+# evaluate_ooc.main(None)
 sys.modules.pop('utils')
 sys.modules.pop('utils.eval_utils')
 
@@ -45,8 +44,8 @@ os.chdir(os.path.join(BASE_DIR, 'OFA'))
 sys.path.remove(os.path.join(BASE_DIR, 'COSMOS'))
 sys.path.append(os.path.join(BASE_DIR, 'OFA'))
 
-from OFA.main import run, run_task_2
-run(df)
+from OFA.main import run,run_task_2
+# run(df)
 
 cosmos_iou = pd.read_csv(os.path.join(BASE_DIR, 'pred_contexts.txt'), header=None)
 cosmos_iou.columns = ['iou']
@@ -96,7 +95,6 @@ def get_fake_scores(row):
     return new_scores
 df['false_scores'] = df.progress_apply(lambda x: get_fake_scores(x), axis=1)
 
-
 def evaluate(df, func):
     df['result'] =  df.progress_apply(lambda x:func(x), axis=1)
     df['predict'] =  df['result'].apply(lambda x:x[0])
@@ -110,11 +108,21 @@ def evaluate(df, func):
     print(method_acc.head(10))
 
 print_div('Evaluating...')
+print('=== COSMOS BASELINE ===')
+evaluate(df, predict_baseline)
+print('=== COSMOS BASELINE + 0.25 IOU===')
+evaluate(df, predict_baseline_025)
+print('=== COSMOS BASELINE + NLI===')
+evaluate(df, predict_nli)
+print('=== COSMOS BASELINE + FABRICATE===')
+evaluate(df, predict_fabricate)
+print('=== COSMOS BASELINE + ONLINE MATCHING===')
+evaluate(df, predict_online_match)
+print('=== COSMOS BASELINE + ALL===')
 evaluate(df, predict_final)
- 
+
 df.to_csv('result_df.csv', index=False)
 df['predict'].to_csv('predict.csv', index=False)
-
 
 
 print_div('TASK 2')
