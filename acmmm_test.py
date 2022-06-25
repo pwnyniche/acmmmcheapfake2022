@@ -45,7 +45,7 @@ sys.path.remove(os.path.join(BASE_DIR, 'COSMOS'))
 sys.path.append(os.path.join(BASE_DIR, 'OFA'))
 
 from OFA.main import run,run_task_2
-# run(df)
+run(df)
 
 cosmos_iou = pd.read_csv(os.path.join(BASE_DIR, 'pred_contexts.txt'), header=None)
 cosmos_iou.columns = ['iou']
@@ -122,7 +122,7 @@ print('=== COSMOS BASELINE + ALL===')
 evaluate(df, predict_final)
 
 df.to_csv('result_df.csv', index=False)
-df['predict'].to_csv('predict.csv', index=False)
+# df['predict'].to_csv('predict.csv', index=False)
 
 
 print_div('TASK 2')
@@ -139,4 +139,4 @@ print(confusion_matrix)
 result = (confusion_matrix[0][0]+confusion_matrix[1][1])/len(df_task_2)
 print('Accuracy:', result)
 df_task_2.to_csv('result_df_task_2.csv', index=False)
-df_task_2['predict'].to_csv('predict_task_2.csv', index=False)
+# df_task_2['predict'].to_csv('predict_task_2.csv', index=False)
