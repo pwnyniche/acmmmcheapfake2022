@@ -46,7 +46,7 @@ sys.path.remove(os.path.join(BASE_DIR, 'COSMOS'))
 sys.path.append(os.path.join(BASE_DIR, 'OFA'))
 
 from OFA.main import run, run_task_2
-run(df)
+# run(df)
 
 cosmos_iou = pd.read_csv(os.path.join(BASE_DIR, 'pred_contexts.txt'), header=None)
 cosmos_iou.columns = ['iou']
@@ -69,7 +69,7 @@ def nli(x):
 df['nli'] = df.progress_apply(lambda x:nli(x), axis=1) 
 
 
-print_div('Running Misleading')
+print_div('Running Fabricate detection')
 keywords = "fake, hoax, fabrication, supposedly, falsification, propaganda, deflection, deception, contradicted, defamation, lie, misleading, deceive, fraud, concocted, bluffing, made up, double meaning, alternative facts, trick, half-truth, untruth, falsehoods, inaccurate, disinformation, misconception"
 df['cap1_mis']=df.progress_apply(lambda x: sbert([x.caption1_modified,keywords]),axis=1)
 df['cap2_mis']=df.progress_apply(lambda x: sbert([x.caption2_modified,keywords]),axis=1)
@@ -107,13 +107,12 @@ def evaluate(df, func):
     print('Accuracy:', result)
     method_acc = df.groupby('method').apply(lambda g: \
         ((g['context_label']==g['predict']).sum() / len(g),len(g) ))
-    print(method_acc.head(10))
 
 print_div('Evaluating...')
 evaluate(df, predict_final)
  
 df.to_csv('result_df.csv', index=False)
-df['predict'].to_csv('predict.csv', index=False)
+# df['predict'].to_csv('predict.csv', index=False)
 
 
 
@@ -131,4 +130,4 @@ print(confusion_matrix)
 result = (confusion_matrix[0][0]+confusion_matrix[1][1])/len(df_task_2)
 print('Accuracy:', result)
 df_task_2.to_csv('result_df_task_2.csv', index=False)
-df_task_2['predict'].to_csv('predict_task_2.csv', index=False)
+# df_task_2['predict'].to_csv('predict_task_2.csv', index=False)

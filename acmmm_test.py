@@ -34,7 +34,7 @@ sys.path.append(os.path.join(BASE_DIR, 'COSMOS'))
 from COSMOS import evaluate_ooc
 
 print_div('Running COSMOS')
-# evaluate_ooc.main(None)
+evaluate_ooc.main(None)
 sys.modules.pop('utils')
 sys.modules.pop('utils.eval_utils')
 
@@ -68,7 +68,7 @@ def nli(x):
 df['nli'] = df.progress_apply(lambda x:nli(x), axis=1) 
 
 
-print_div('Running Misleading')
+print_div('Running Fabricate detection')
 keywords = "fake, hoax, fabrication, supposedly, falsification, propaganda, deflection, deception, contradicted, defamation, lie, misleading, deceive, fraud, concocted, bluffing, made up, double meaning, alternative facts, trick, half-truth, untruth, falsehoods, inaccurate, disinformation, misconception"
 df['cap1_mis']=df.progress_apply(lambda x: sbert([x.caption1_modified,keywords]),axis=1)
 df['cap2_mis']=df.progress_apply(lambda x: sbert([x.caption2_modified,keywords]),axis=1)
