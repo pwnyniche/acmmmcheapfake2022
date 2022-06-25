@@ -4,11 +4,11 @@ FROM nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
 ENV DEBIAN_FRONTEND="noninteractive" \
     TZ="Asia/Vietnam"
 
-ENV ANNOTATION_DATA_DIR="/acmmmcheapfakes/data/" \
-    IMAGE_DATA_DIR="/acmmmcheapfakes/data/images/" \
-    BASE_DIR="/acmmmcheapfakes/"
+ENV ANNOTATION_DATA_DIR="/acmmmcheapfakes/" \
+    IMAGE_DATA_DIR="/acmmmcheapfakes/" \
+    BASE_DIR="/acmmmcheapfakes-src/"
 
-WORKDIR /acmmmcheapfakes/
+WORKDIR /acmmmcheapfakes-src/
 
 # Copy Dependencies
 COPY . ./
@@ -49,6 +49,11 @@ RUN cd OFA && pip3 install -r requirements.txt
 RUN pip3 install -e detectron2
 RUN pip3 install omegaconf==2.0.06
 RUN pip3 install hydra-core==1.0.7
+
+# Download OFA checkpoint
+RUN mkdir OFA/checkpoints
+RUN cd OFA/checkpoints && wget https://ofa-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/snli_ve_large_best.pt 
+
 # Start the code
 ENTRYPOINT []
 CMD [ "python3", "acmmm.py" ]

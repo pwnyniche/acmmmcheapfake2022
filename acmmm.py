@@ -46,7 +46,7 @@ sys.path.remove(os.path.join(BASE_DIR, 'COSMOS'))
 sys.path.append(os.path.join(BASE_DIR, 'OFA'))
 
 from OFA.main import run, run_task_2
-# run(df)
+run(df)
 
 cosmos_iou = pd.read_csv(os.path.join(BASE_DIR, 'pred_contexts.txt'), header=None)
 cosmos_iou.columns = ['iou']
@@ -124,7 +124,7 @@ df_task_2['online_check'] = df_task_2.progress_apply(
     retrieve(os.path.join(IMAGE_DATA_DIR, x.img_local_path), x.caption), axis=1)
 df_task_2['online_score'] = df_task_2['online_check'].apply(lambda x:x[0])
 df_task_2 = run_task_2(df_task_2)
-df_task_2['predict'] = (df_task_2['online_score']<0.95) | (df_task_2['ofa_score']>0.3)
+df_task_2['predict'] = (df_task_2['online_score']<0.97) | (df_task_2['ofa_score']>0.3)
 confusion_matrix = pd.crosstab(df_task_2['predict'], df_task_2['genuine'], rownames=['Predicted'], colnames=['Actual'])
 print(confusion_matrix)
 result = (confusion_matrix[0][0]+confusion_matrix[1][1])/len(df_task_2)
