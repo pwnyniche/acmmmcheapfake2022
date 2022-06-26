@@ -24,23 +24,18 @@ test_data = list(
 df = pd.DataFrame(test_data)
 df['bert_base_score'] = df['bert_base_score'].astype(float)
 
-def print_div(s):
-    term_size = os.get_terminal_size()
-    print('=' * term_size.columns)
-    print('||' + s)
-    print('=' * term_size.columns)
 
 sys.path.append(os.path.join(BASE_DIR, 'COSMOS'))
 
 from COSMOS import evaluate_ooc
 
-print_div('Running COSMOS')
+print('Running COSMOS')
 evaluate_ooc.main(None)
 sys.modules.pop('utils')
 sys.modules.pop('utils.eval_utils')
 
 
-print_div('Running OFA')
+print('Running OFA')
 os.chdir(os.path.join(BASE_DIR, 'OFA'))
 sys.path.remove(os.path.join(BASE_DIR, 'COSMOS'))
 sys.path.append(os.path.join(BASE_DIR, 'OFA'))
@@ -56,7 +51,7 @@ df = pd.concat([df, ofa_result[['c1_entail','c2_entail']]], axis=1)
 
 os.chdir(BASE_DIR)
 
-print_div('Running NLI')
+print('Running NLI')
 df['nli_label'] = df.progress_apply(lambda x: classifier(x.caption1+x.caption2)[0], axis=1)
 df['nli_label_reverse'] = df.progress_apply(lambda x: classifier(x.caption2+x.caption1)[0], axis=1)
 def nli(x):
@@ -69,7 +64,7 @@ def nli(x):
 df['nli'] = df.progress_apply(lambda x:nli(x), axis=1) 
 
 
-print_div('Running Fabricate detection')
+print('Running Fabricate detection')
 keywords = "fake, hoax, fabrication, supposedly, falsification, propaganda, deflection, deception, contradicted, defamation, lie, misleading, deceive, fraud, concocted, bluffing, made up, double meaning, alternative facts, trick, half-truth, untruth, falsehoods, inaccurate, disinformation, misconception"
 df['cap1_mis']=df.progress_apply(lambda x: sbert([x.caption1_modified,keywords]),axis=1)
 df['cap2_mis']=df.progress_apply(lambda x: sbert([x.caption2_modified,keywords]),axis=1)
@@ -108,15 +103,14 @@ def evaluate(df, func):
     method_acc = df.groupby('method').apply(lambda g: \
         ((g['context_label']==g['predict']).sum() / len(g),len(g) ))
 
-print_div('Evaluating...')
+print('Evaluating...')
 evaluate(df, predict_final)
  
 df.to_csv('result_df.csv', index=False)
 # df['predict'].to_csv('predict.csv', index=False)
 
 
-
-print_div('TASK 2')
+print('TASK 2')
 data_task_2 = json.load(open(os.path.join(ANNOTATION_DATA_DIR, 'task_2.json')))
 df_task_2 = pd.DataFrame(data_task_2)
 df_task_2['online_check'] = df_task_2.progress_apply(

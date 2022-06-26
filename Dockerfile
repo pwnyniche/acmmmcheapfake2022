@@ -32,6 +32,12 @@ RUN python3 -m pip install --upgrade pip==21.2.2 && \
 
 RUN cd OFA && pip3 install --use-feature=in-tree-build ./fairseq
 
+# Download OFA checkpoint
+RUN mkdir OFA/checkpoints
+# RUN cd OFA/checkpoints && wget --no-verbose --show-progress --progress=bar:force:noscroll https://ofa-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/snli_ve_large_best.pt 
+RUN pip3 install gdown
+RUN cd OFA/checkpoints && gdown 1iFGMW1fEAuQfI02SeV95MGDMu9LGQz-Y
+
 # COSMOS
 RUN pip3 install -r COSMOS/requirements.txt
 
@@ -49,10 +55,6 @@ RUN cd OFA && pip3 install -r requirements.txt
 RUN pip3 install -e detectron2
 RUN pip3 install omegaconf==2.0.06
 RUN pip3 install hydra-core==1.0.7
-
-# Download OFA checkpoint
-RUN mkdir OFA/checkpoints
-RUN cd OFA/checkpoints && wget https://ofa-beijing.oss-cn-beijing.aliyuncs.com/checkpoints/snli_ve_large_best.pt 
 
 # Start the code
 ENTRYPOINT []
