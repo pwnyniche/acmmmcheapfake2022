@@ -1,17 +1,26 @@
-# COSMOS
-pip install -r COSMOS/requirements.txt
+# A Textual-Visual-Entailment-based Unsupervised Algorithm for Cheapfake Detection
 
-python -m spacy download en_core_web_sm
-python -m spacy download en
+## Build the image
+    docker build -t acmmmcheapfakes:submission .
 
-pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchtext==0.4.0 -f https://download.pytorch.org/whl/torch_stable.html
-python -m pip install -e detectron2
-pip install numpy --upgrade
+## Run the image
+    docker run -v  <path to folder containing the hidden test split file test.json>:/acmmmcheapfakes/  --gpus all acmmmcheapfakes:submission > <output file>
 
-# BERT
-Auto finish itself
+## The folder containing the test split file should look like this (for both tasks):
+Please note that a JSON file containing annotation for Task 1 and 2 **must** be named `test_data.json` and `task_2.json` respectively.
 
-# OFA
-cd OFA
-pip install -r requirements.txt
+    data
+    ├── images_task_2            
+    │   ├── 2.jpg                
+    │   ├── 20.jpg        
+    │   ├── 58.jpg      
+    │   └── ...      
+    ├── public_test_mmsys          
+    │   ├── 0.jpg
+    │   ├── 1.jpg
+    │   ├── 2.jpg  
+    │   └── ...          
+    ├── task_2.json 
+    └── test_data.json
 
+We also include the sample structure in `data` folder.
