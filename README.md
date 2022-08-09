@@ -5,7 +5,8 @@ Docker with GPU flag on (GPU memory ~ 10GB minimum).
 
 ## Build the image
     docker build -t acmmmcheapfakes:submission .
-
+## or Pull from dockerhub
+    docker pull tqtnk2000/acmmmcheapfakes:submission
 ## Run the image
     docker run -v  <path to folder containing the hidden test split file test.json>:/acmmmcheapfakes/  --gpus all acmmmcheapfakes:submission > <output file>
 
