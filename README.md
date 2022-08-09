@@ -1,5 +1,8 @@
 # A Textual-Visual-Entailment-based Unsupervised Algorithm for Cheapfake Detection
 
+## Requirements
+Docker with GPU flag on (GPU memory ~ 10GB minimum).
+
 ## Build the image
     docker build -t acmmmcheapfakes:submission .
 
