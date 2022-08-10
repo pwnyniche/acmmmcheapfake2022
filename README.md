@@ -9,7 +9,8 @@
 - COSMOS (included in the code, just install the requirements.txt)
 - OFA (included in the code, just install the requirements.txt)
 - detectron2 (included in the code, just install the requirements.txt)
-- GPU with minimum 10GB memory .
+- GPU with minimum 10GB memory
+
 We recommend using Docker with GPU flag on.
 
 ## Install with Docker
