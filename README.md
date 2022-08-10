@@ -11,7 +11,7 @@
 - detectron2 (included in the code, just install the requirements.txt)
 - GPU with minimum 10GB memory
 
-We recommend using Docker with GPU flag on.
+_Note: We recommend using Docker with GPU for easy installation._
 
 ## Install with Docker
 ### Build the image
@@ -21,8 +21,16 @@ We recommend using Docker with GPU flag on.
 ### Run the image
     docker run -v  <path to folder containing the hidden test split file test.json>:/acmmmcheapfakes/  --gpus all acmmmcheapfakes:submission > <output file>
 
-## The folder containing the test split file should look like this (for both tasks):
-Please note that a JSON file containing annotation for Task 1 and 2 **must** be named `test_data.json` and `task_2.json` respectively.
+## Input / Output:
+
+## How the code run:
+
+
+## Dataset:
+### The dataset:
+The COSMOS dataset is not public. Please visit https://detecting-cheapfakes.github.io/ or fill in [this form](https://docs.google.com/forms/d/e/1FAIpQLSf7rZ1-UX419nXqCp2NldekqVNJcS2W9A3jL7MTKhom41p0eg/viewform) to get access.
+### Dataset folder structure:
+The folder containing the test split file should look like this (for both tasks):
 
     data
     ├── images_task_2            
@@ -38,6 +46,7 @@ Please note that a JSON file containing annotation for Task 1 and 2 **must** be 
     ├── task_2.json 
     └── test_data.json
 
-We also include the sample structure in `data` folder.
+Please note that a JSON file containing annotation for Task 1 and 2 **must** be named `test_data.json` and `task_2.json` respectively.
+
 
 
