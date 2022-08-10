@@ -22,12 +22,17 @@ _Note: We recommend using Docker with GPU for easy installation._
     docker run -v  <path to folder containing the hidden test split file test.json>:/acmmmcheapfakes/  --gpus all acmmmcheapfakes:submission > <output file>
 
 ## Input / Output:
+### Input:
+The input includes an annotation file and an image folder from the COSMOS dataset. The annotation file should include the captions and the relative path to the raw image.
+
+### Output:
+The output is a dataframe with predicted labels (0 for NOOC, 1 for OOC) and a confusion matrix. The dataframe also includes a field to indicate which method is used to predict the label. Please modify the code in "acmmm.py" to save this dataframe for further inspection.
 
 ## How the code run:
-
+The main code is in the file "acmmm.py". Each of the components is written separatedly after a simple command "print("Runnning *method*")". 
 
 ## Dataset:
-### The dataset:
+### The COSMOS dataset:
 The COSMOS dataset is not public. Please visit https://detecting-cheapfakes.github.io/ or fill in [this form](https://docs.google.com/forms/d/e/1FAIpQLSf7rZ1-UX419nXqCp2NldekqVNJcS2W9A3jL7MTKhom41p0eg/viewform) to get access.
 ### Dataset folder structure:
 The folder containing the test split file should look like this (for both tasks):
