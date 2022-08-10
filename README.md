@@ -29,7 +29,7 @@ The input includes an annotation file and an image folder from the COSMOS datase
 The output is a dataframe with predicted labels (0 for NOOC, 1 for OOC) and a confusion matrix. The dataframe also includes a field to indicate which method is used to predict the label. Please modify the code in "acmmm.py" to save this dataframe for further inspection.
 
 ## How the code run:
-The main code is in the file "acmmm.py". Each of the components is written separatedly after a simple command "print("Runnning *method*")". 
+The main code is in the file "acmmm.py". Each of the components is written separatedly after the command *_print("Runnning *method*")_*. 
 
 ## Dataset:
 ### The COSMOS dataset:
